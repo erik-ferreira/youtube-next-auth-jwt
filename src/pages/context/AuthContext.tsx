@@ -8,6 +8,7 @@ import {
 import Router from "next/router";
 import { setCookie, parseCookies } from "nookies";
 
+import { api } from "../services/api";
 import { recoverUserInformation, signInRequest } from "../services/auth";
 
 interface AuthProvider {
@@ -48,6 +49,8 @@ export function AuthProvider({ children }: AuthProvider) {
     setCookie(undefined, "nextauth.token", token, {
       maxAge: 60 * 60 * 1, // 1 hour
     });
+
+    api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
     setUser(user);
 

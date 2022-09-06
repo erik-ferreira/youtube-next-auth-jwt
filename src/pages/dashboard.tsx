@@ -1,7 +1,10 @@
 import { Fragment } from "react";
 import Head from "next/head";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
 import { useAuth } from "./context/AuthContext";
 
 const navigation = ["Dashboard", "Team", "Projects", "Calendar", "Reports"];
@@ -224,3 +227,20 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { "nextauth.token": token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
