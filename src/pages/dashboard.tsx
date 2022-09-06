@@ -5,9 +5,8 @@ import { parseCookies } from "nookies";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-// import { api } from "./services/api";
 import { useAuth } from "./context/AuthContext";
-import { getAPIClient } from "./services/axios";
+// import { getAPIClient } from "./services/axios";
 
 const navigation = ["Dashboard", "Team", "Projects", "Calendar", "Reports"];
 const profile = ["Your Profile", "Settings"];
@@ -231,10 +230,10 @@ export default function Dashboard() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const apiClient = getAPIClient(ctx);
+  // const apiClient = getAPIClient(ctx);
   const { "nextauth.token": token } = parseCookies(ctx);
 
-  await apiClient.get("/users");
+  // await apiClient.get("/users");
 
   if (!token) {
     return {
